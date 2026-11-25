@@ -3,3 +3,55 @@ GET {{URL}}/api/health
 ###
 
 GET {{URL}}/api/admin/accounts/:1
+
+### 1. Lấy danh sách phim
+GET {{URL}}/api/admin/movies
+
+### 2. Lấy phim có ID = 1
+GET {{URL}}/api/admin/movies/1
+
+### 3. Tìm phim theo tên
+GET {{URL}}/api/admin/movies/search?title=Avengers
+
+### 4. Thêm phim mới
+POST {{URL}}/api/admin/movies
+Content-Type: application/json
+
+{
+  "title": "Phim kiem thu CinemaBooking",
+  "description": "Phim dung de kiem tra API",
+  "duration": 120,
+  "release_date": "2026-11-26",
+  "age_rating": "T13",
+  "language": "Vietnamese",
+  "poster_url": null,
+  "trailer_url": null,
+  "format": "2D",
+  "status": "COMING_SOON"
+}
+
+### 5. Cập nhật phim có ID = 1
+PUT {{URL}}/api/admin/movies/1
+Content-Type: application/json
+
+{
+  "title": "Phim da cap nhat",
+  "description": "Thong tin phim sau khi cap nhat",
+  "duration": 125,
+  "release_date": "2026-11-26",
+  "age_rating": "T13",
+  "language": "Vietnamese",
+  "poster_url": null,
+  "trailer_url": null,
+  "format": "2D",
+  "status": "COMING_SOON"
+}
+
+### 6. Xóa phim có ID = 1
+DELETE {{URL}}/api/admin/movies/1
+### Tìm phim theo tên
+GET {{URL}}/api/admin/movies/search?title=kiem%20thu
+### Kiểm tra phim không tồn tại
+GET {{URL}}/api/admin/movies/999999
+### Kiểm tra ID không hợp lệ
+GET {{URL}}/api/admin/movies/abc
