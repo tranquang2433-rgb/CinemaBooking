@@ -73,3 +73,62 @@ export const createMovie = async (movieData) => {
 
   return result.insertId;
 };
+
+// 4. Cập nhật thông tin phim
+export const updateMovie = async (id, movieData) => {
+  const {
+    title,
+    description,
+    duration,
+    release_date,
+    age_rating,
+    language,
+    poster_url,
+    trailer_url,
+    format,
+    status,
+  } = movieData;
+
+  const [result] = await pool.query(
+    `UPDATE movies
+     SET title = ?,
+         description = ?,
+         duration = ?,
+         release_date = ?,
+         age_rating = ?,
+         language = ?,
+         poster_url = ?,
+         trailer_url = ?,
+         format = ?,
+         status = ?
+     WHERE movie_id = ?
+    `,
+    [
+      title,
+      description,
+      duration,
+      release_date,
+      age_rating,
+      language,
+      poster_url,
+      trailer_url,
+      format,
+      status,
+      id,
+    ],
+  );
+
+  return result.affectedRows;
+};
+
+// 5. Xóa phim theo ID
+export const deleteMovie = async (id) => {
+  const [result] = await pool.query(
+    `DELETE FROM movies
+     WHERE movie_id = ?
+    `,
+    [id],
+  );
+
+  return result.affectedRows;
+};
