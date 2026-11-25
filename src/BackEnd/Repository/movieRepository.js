@@ -132,3 +132,14 @@ export const deleteMovie = async (id) => {
 
   return result.affectedRows;
 };
+// 6. Lấy danh sách tất cả phim
+export const findAllMovies = async () => {
+  const [rows] = await pool.query(
+    `SELECT *
+     FROM movies
+     ORDER BY movie_id DESC
+    `,
+  );
+
+  return rows;
+};
