@@ -1,5 +1,5 @@
 import mysql2 from "mysql2/promise";
-import env from "../Config/env.js";
+import env from "./env.js";
 
 // console.log("Database configuration:");
 // console.log("Host:", env.DB_HOST);

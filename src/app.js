@@ -14,7 +14,9 @@ app.get("/api/health", (req, res) => {
     message: "CinemaBooking Backend is running!",
   });
 });
+
 app.use("/api/admin/accounts", accountRoutes);
 app.use("/api/admin/movies", movieRoutes);
+app.use("/api/user", userRoutes);
 app.use(errorMiddleware);
 export default app;
