@@ -10,9 +10,11 @@ import {
 } from "../validator/account.Validate.js";
 import {
   createUser,
-  findAccountByEmail,
-  findAccountById,
-} from "../Repository/account.Repository.js";
+  findUserByEmail,
+  findUserById,
+  updateUserById,
+  updateUserPassword,
+} from "../Repository/user.Repository.js";
 import { AppErrors } from "../validator/AppErrors.js";
 export const register = async ({ fullname, email, password, phone }) => {
   const fullnameValidated = validateName(fullname);
@@ -28,13 +30,13 @@ export const register = async ({ fullname, email, password, phone }) => {
   if (errors.length > 0) {
     throw new AppErrors(errors.join(","), 400);
   }
-  const account = await findAccountByEmail(email);
+  const account = await findUserByEmail(email);
   if (account) {
     throw new AppErrors("Email da ton tai", 409);
   }
   const hashPassword = await bcrypt.hash(password, 10);
   const result = await createUser(fullname, email, hashPassword, phone);
-  const findAccount = await findAccountByEmail(email);
+  const findAccount = await findUserByEmail(email);
   const safeAccount = {
     id: findAccount.user_id,
     fullname: findAccount.fullname,
@@ -52,7 +54,7 @@ export const login = async ({ email, password }) => {
   if (errors.length > 0) {
     throw new AppErrors(errors.join(","), 400);
   }
-  const account = await findAccountByEmail(email);
+  const account = await findUserByEmail(email);
   if (!account) {
     throw new AppErrors("Email khong dung", 401);
   }
@@ -83,9 +85,55 @@ export const getUserById = async (id) => {
   if (!idValidate.valid) {
     throw new AppErrors(idValidate.errors.join(","), 400);
   }
-  const account = await findAccountById(id);
+  const account = await findUserById(id);
   if (!account) {
     throw new AppErrors("Tai khoan khong ton tai", 404);
   }
   return account;
+};
+export const updateUser = async (id, fullname, email, phone) => {
+  const idValidated = validateId(id);
+  const nameValidated = validateName(fullname);
+  const emailValidated = validateEmail(email);
+  const phoneValidated = validatePhone(phone);
+  const errors = [
+    ...idValidated.errors,
+    ...nameValidated.errors,
+    ...emailValidated.errors,
+    ...phoneValidated.errors,
+  ];
+  if (errors.length > 0) {
+    throw new AppErrors(errors.join(","), 400);
+  }
+  const account = await findUserById(id);
+  if (!account) {
+    throw new AppErrors("Tai khoan khong ton tai", 404);
+  }
+  const result = await updateUserById(id, {
+    fullname,
+    email,
+    phone,
+  });
+  return result;
+};
+
+export const updatePassword = async (id, password) => {
+  const idValidated = validateId(id);
+  const passwordValidated = validatePassword(password);
+  const errors = [...idValidated.errors, ...passwordValidated.errors];
+  if (errors.length > 0) {
+    throw new AppErrors(errors.join(","), 400);
+  }
+  const account = await findUserById(id);
+  if (!account) {
+    throw new AppErrors("KHong tim thay tai khoan", 404);
+  }
+  const hashPassword = await bcrypt.hash(password, 10);
+  const passwordUpdated = await updateUserPassword(id, hashPassword);
+  if (passwordUpdated === 0) {
+    throw new AppErrors("Cap nhat mat khau that bai", 500);
+  }
+  return {
+    message: "Cap nhat mat khau thanh cong",
+  };
 };

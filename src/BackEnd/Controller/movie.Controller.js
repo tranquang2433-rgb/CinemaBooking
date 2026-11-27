@@ -5,7 +5,7 @@ import {
   addMovie,
   editMovie,
   removeMovie,
-} from "../Service/movieService.js";
+} from "../Service/movie.Service.js";
 
 // 1. Lấy danh sách tất cả phim
 export const getAllMoviesController = async (req, res) => {

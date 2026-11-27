@@ -25,30 +25,34 @@ export const validateMovieData = (movieData) => {
   } = movieData;
 
   // Kiểm tra tên phim
-  if (typeof title !== "string" || title.trim() === "") {
+  if (typeof movieData.title !== "string" || movieData.title.trim() === "") {
     result.valid = false;
     result.errors.push("Ten phim khong duoc de trong");
-  } else if (title.trim().length > 200) {
+  } else if (movieData.title.trim().length > 200) {
     result.valid = false;
     result.errors.push("Ten phim toi da 200 ky tu");
   }
 
   // Kiểm tra thời lượng
-  if (!Number.isInteger(duration) || duration <= 0) {
+  if (!Number.isInteger(movieData.duration) || movieData.duration <= 0) {
     result.valid = false;
     result.errors.push("Thoi luong phim phai la so nguyen duong");
   }
 
   // Kiểm tra mô tả
-  if (description != null && typeof description !== "string") {
+  if (
+    movieData.description != null &&
+    typeof movieData.description !== "string"
+  ) {
     result.valid = false;
     result.errors.push("Mo ta phim khong hop le");
   }
 
   // Kiểm tra giới hạn độ tuổi
   if (
-    age_rating != null &&
-    (typeof age_rating !== "string" || age_rating.length > 20)
+    movieData.age_rating != null &&
+    (typeof movieData.age_rating !== "string" ||
+      movieData.age_rating.length > 20)
   ) {
     result.valid = false;
     result.errors.push("Gioi han do tuoi khong hop le");
@@ -56,8 +60,8 @@ export const validateMovieData = (movieData) => {
 
   // Kiểm tra ngôn ngữ
   if (
-    language != null &&
-    (typeof language !== "string" || language.length > 50)
+    movieData.language != null &&
+    (typeof movieData.language !== "string" || movieData.language.length > 50)
   ) {
     result.valid = false;
     result.errors.push("Ngon ngu khong hop le");
@@ -65,8 +69,9 @@ export const validateMovieData = (movieData) => {
 
   // Kiểm tra poster
   if (
-    poster_url != null &&
-    (typeof poster_url !== "string" || poster_url.length > 500)
+    movieData.poster_url != null &&
+    (typeof movieData.poster_url !== "string" ||
+      movieData.poster_url.length > 500)
   ) {
     result.valid = false;
     result.errors.push("Poster URL khong hop le");
@@ -74,21 +79,22 @@ export const validateMovieData = (movieData) => {
 
   // Kiểm tra trailer
   if (
-    trailer_url != null &&
-    (typeof trailer_url !== "string" || trailer_url.length > 500)
+    movieData.trailer_url != null &&
+    (typeof movieData.trailer_url !== "string" ||
+      movieData.trailer_url.length > 500)
   ) {
     result.valid = false;
     result.errors.push("Trailer URL khong hop le");
   }
 
   // Kiểm tra định dạng phim
-  if (format != null && !["2D", "3D"].includes(format)) {
+  if (movieData.format != null && !["2D", "3D"].includes(movieData.format)) {
     result.valid = false;
     result.errors.push("Dinh dang phim chi duoc la 2D hoac 3D");
   }
 
   // Kiểm tra trạng thái phim
-  if (!["NOW_SHOWING", "COMING_SOON", "ENDED"].includes(status)) {
+  if (!["NOW_SHOWING", "COMING_SOON", "ENDED"].includes(movieData.status)) {
     result.valid = false;
     result.errors.push("Trang thai phim khong hop le");
   }

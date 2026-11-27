@@ -2,8 +2,9 @@ import { json } from "express";
 import {
   getAllAccounts,
   getAccountById,
-  deleteAccountById,
-  updateAccountById,
+  deleteAccount,
+  updateAccount,
+  updateAccountPassword,
 } from "../Service/account.Service.js";
 export const getAllAccountsController = async (req, res) => {
   const accounts = await getAllAccounts();
@@ -19,21 +20,30 @@ export const getAccountByIdController = async (req, res) => {
   });
 };
 
-// export const deleteAccountController = async (req, res) => {
-//   const id = req.params.id;
-//   const account = await deleteAccountById(id);
-//   return res.status(200).json({
-//     message: "Xoa thanh cong",
-//     data: account,
-//   });
-// };
+export const deleteAccountController = async (req, res) => {
+  const id = req.params.id;
+  const account = await deleteAccount(id);
+  return res.status(200).json({
+    message: "Xoa thanh cong",
+    data: account,
+  });
+};
 
-// export const updateAccountController = async (req, res) => {
-//   const id = req.params.id;
-//   const { fullname, email, phone } = req.body;
-//   const account = await updateAccountById(id, fullname, email, phone);
-//   return res.status(201).json({
-//     message: "Cap nhat thanh cong",
-//     data: account,
-//   });
-// };
+export const updateAccountController = async (req, res) => {
+  const id = req.params.id;
+  const { fullname, email, phone } = req.body;
+  const account = await updateAccount(id, fullname, email, phone);
+  return res.status(200).json({
+    message: "Cap nhat thanh cong",
+    data: account,
+  });
+};
+
+export const updateAccountPasswordController = async (req, res) => {
+  const id = req.params.id;
+  const { password } = req.body;
+  const result = await updateAccountPassword(id, password);
+  return res.status(200).json({
+    message: "Cap nhat mat khau thanh cong",
+  });
+};

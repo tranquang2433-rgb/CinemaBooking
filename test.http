@@ -1,21 +1,76 @@
 @URL =http://localhost:3000
 GET {{URL}}/api/health
 ###
+POST {{URL}}/api/users/register
+Content-Type: application/json
 
-GET {{URL}}/api/admin/accounts/:1
+{
+  "fullname":"An",
+  "email":"user@gmail.com",
+  "password":"user1234",
+  "phone":"0131231231"
+}
+### Dang nhap cho user
+POST {{URL}}/api/users/login
+Content-Type: application/json
+
+{
+  "email":"user3@gmail.com",
+  "password":"user1234"
+}
+###
+GET {{URL}}/api/users/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ1c2VyM0BnbWFpbC5jb20iLCJyb2xlIjoyLCJpYXQiOjE3OTU3NjUzNTEsImV4cCI6MTc5NTg1MTc1MX0.aZnPv-GD_D_4hPMMPQdZqDJLOIXyq9atA85kflNaa5Q
+
+###
+PUT {{URL}}/api/users/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ1c2VyQGdtYWlsLmNvbSIsInJvbGUiOjIsImlhdCI6MTc5NTc1OTUyMCwiZXhwIjoxNzk1ODQ1OTIwfQ.9IOK7jBv2E0a0fDSMsnMgZSqj_6x4l9dJF1-JLttcsE
+Content-Type: application/json
+
+{
+  "fullname":"Boa",
+  "email":"user3@gmail.com",
+  "phone":"0121131111"
+}
+### Dang ky cho admin
+POST {{URL}}/api/users/register
+Content-Type: application/json
+
+{
+  "fullname":"admin",
+  "email":"admin@gmail.com",
+  "password":"admin123",
+  "phone":"0121212121"
+}
+### Dang nhap cho admin
+POST {{URL}}/api/users/login
+Content-Type: application/json
+
+{
+  "email":"admin@gmail.com",
+  "password":"admin123"
+}
+
+###
+GET {{URL}}/api/admin/accounts/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoxLCJpYXQiOjE3OTU3NjU3MzksImV4cCI6MTc5NTg1MjEzOX0.eCU0LiO9aVIRDwoMYH5TPXRDz7p8fAFK6XjPIpDGvmE
 
 ### 1. Lấy danh sách phim
 GET {{URL}}/api/admin/movies
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ1c2VyQGdtYWlsLmNvbSIsInJvbGUiOjIsImlhdCI6MTc5NTc1OTUyMCwiZXhwIjoxNzk1ODQ1OTIwfQ.9IOK7jBv2E0a0fDSMsnMgZSqj_6x4l9dJF1-JLttcsE
 
 ### 2. Lấy phim có ID = 1
 GET {{URL}}/api/admin/movies/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ1c2VyQGdtYWlsLmNvbSIsInJvbGUiOjIsImlhdCI6MTc5NTc1OTUyMCwiZXhwIjoxNzk1ODQ1OTIwfQ.9IOK7jBv2E0a0fDSMsnMgZSqj_6x4l9dJF1-JLttcsE
 
 ### 3. Tìm phim theo tên
 GET {{URL}}/api/admin/movies/search?title=Avengers
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ1c2VyQGdtYWlsLmNvbSIsInJvbGUiOjIsImlhdCI6MTc5NTc1OTUyMCwiZXhwIjoxNzk1ODQ1OTIwfQ.9IOK7jBv2E0a0fDSMsnMgZSqj_6x4l9dJF1-JLttcsE
 
 ### 4. Thêm phim mới
 POST {{URL}}/api/admin/movies
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ1c2VyQGdtYWlsLmNvbSIsInJvbGUiOjIsImlhdCI6MTc5NTc1OTUyMCwiZXhwIjoxNzk1ODQ1OTIwfQ.9IOK7jBv2E0a0fDSMsnMgZSqj_6x4l9dJF1-JLttcsE
 
 {
   "title": "Phim kiem thu CinemaBooking",
@@ -24,8 +79,6 @@ Content-Type: application/json
   "release_date": "2026-11-26",
   "age_rating": "T13",
   "language": "Vietnamese",
-  "poster_url": null,
-  "trailer_url": null,
   "format": "2D",
   "status": "COMING_SOON"
 }
@@ -33,6 +86,7 @@ Content-Type: application/json
 ### 5. Cập nhật phim có ID = 1
 PUT {{URL}}/api/admin/movies/1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbUBnbWFpbC5jb20iLCJyb2xlIjoxLCJpYXQiOjE3OTU3NTczNDEsImV4cCI6MTc5NTg0Mzc0MX0.42Kc2g7cqNNIyoVFvyGWIMq77MIt8y4SbNawHTzz2hQ
 
 {
   "title": "Phim da cap nhat",
@@ -49,9 +103,16 @@ Content-Type: application/json
 
 ### 6. Xóa phim có ID = 1
 DELETE {{URL}}/api/admin/movies/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbUBnbWFpbC5jb20iLCJyb2xlIjoxLCJpYXQiOjE3OTU3NTczNDEsImV4cCI6MTc5NTg0Mzc0MX0.42Kc2g7cqNNIyoVFvyGWIMq77MIt8y4SbNawHTzz2hQ
+
 ### Tìm phim theo tên
 GET {{URL}}/api/admin/movies/search?title=kiem%20thu
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbUBnbWFpbC5jb20iLCJyb2xlIjoxLCJpYXQiOjE3OTU3NTczNDEsImV4cCI6MTc5NTg0Mzc0MX0.42Kc2g7cqNNIyoVFvyGWIMq77MIt8y4SbNawHTzz2hQ
+
 ### Kiểm tra phim không tồn tại
 GET {{URL}}/api/admin/movies/999999
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbUBnbWFpbC5jb20iLCJyb2xlIjoxLCJpYXQiOjE3OTU3NTczNDEsImV4cCI6MTc5NTg0Mzc0MX0.42Kc2g7cqNNIyoVFvyGWIMq77MIt8y4SbNawHTzz2hQ
+
 ### Kiểm tra ID không hợp lệ
 GET {{URL}}/api/admin/movies/abc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbUBnbWFpbC5jb20iLCJyb2xlIjoxLCJpYXQiOjE3OTU3NTczNDEsImV4cCI6MTc5NTg0Mzc0MX0.42Kc2g7cqNNIyoVFvyGWIMq77MIt8y4SbNawHTzz2hQ

@@ -28,6 +28,7 @@ export const findMovieByTitle = async (title) => {
 };
 
 // 3. Thêm phim mới
+// 3. Thêm phim mới
 export const createMovie = async (movieData) => {
   const {
     title,
@@ -36,8 +37,6 @@ export const createMovie = async (movieData) => {
     release_date,
     age_rating,
     language,
-    poster_url,
-    trailer_url,
     format,
     status,
   } = movieData;
@@ -50,13 +49,10 @@ export const createMovie = async (movieData) => {
       release_date,
       age_rating,
       language,
-      poster_url,
-      trailer_url,
       format,
       status
     )
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `,
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       title,
       description,
@@ -64,8 +60,6 @@ export const createMovie = async (movieData) => {
       release_date,
       age_rating,
       language,
-      poster_url,
-      trailer_url,
       format,
       status,
     ],
@@ -73,7 +67,6 @@ export const createMovie = async (movieData) => {
 
   return result.insertId;
 };
-
 // 4. Cập nhật thông tin phim
 export const updateMovie = async (id, movieData) => {
   const {
@@ -83,26 +76,22 @@ export const updateMovie = async (id, movieData) => {
     release_date,
     age_rating,
     language,
-    poster_url,
-    trailer_url,
     format,
     status,
   } = movieData;
 
   const [result] = await pool.query(
     `UPDATE movies
-     SET title = ?,
-         description = ?,
-         duration = ?,
-         release_date = ?,
-         age_rating = ?,
-         language = ?,
-         poster_url = ?,
-         trailer_url = ?,
-         format = ?,
-         status = ?
-     WHERE movie_id = ?
-    `,
+     SET
+       title = ?,
+       description = ?,
+       duration = ?,
+       release_date = ?,
+       age_rating = ?,
+       language = ?,
+       format = ?,
+       status = ?
+     WHERE movie_id = ?`,
     [
       title,
       description,
@@ -110,8 +99,6 @@ export const updateMovie = async (id, movieData) => {
       release_date,
       age_rating,
       language,
-      poster_url,
-      trailer_url,
       format,
       status,
       id,
@@ -120,7 +107,6 @@ export const updateMovie = async (id, movieData) => {
 
   return result.affectedRows;
 };
-
 // 5. Xóa phim theo ID
 export const deleteMovie = async (id) => {
   const [result] = await pool.query(

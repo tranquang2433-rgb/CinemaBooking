@@ -5,10 +5,10 @@ import {
   createMovie,
   updateMovie,
   deleteMovie,
-} from "../Repository/movieRepository.js";
+} from "../Repository/movie.Repository.js";
 
-import { validateId } from "../validator/accountValidate.js";
-import { validateMovieData } from "../validator/movieValidate.js";
+import { validateId } from "../validator/account.Validate.js";
+import { validateMovieData } from "../validator/movie.Validate.js";
 import { AppErrors } from "../validator/AppErrors.js";
 
 // 1. Lấy danh sách tất cả phim
@@ -19,10 +19,10 @@ export const getAllMovies = async () => {
 
 // 2. Tìm phim theo ID
 export const getMovieById = async (id) => {
-  const idValidate = validateId(id);
+  const idValidated = validateId(id);
 
-  if (!idValidate.valid) {
-    throw new AppErrors(idValidate.errors.join(","), 400);
+  if (!idValidated.valid) {
+    throw new AppErrors(idValidated.errors.join(","), 400);
   }
 
   const movie = await findMovieById(id);
@@ -39,7 +39,9 @@ export const searchMovies = async (title) => {
   if (typeof title !== "string" || title.trim() === "") {
     throw new AppErrors("Can nhap ten phim", 400);
   }
-
+  if (title.length > 255) {
+    throw new AppErrors("Ten phim phai duoi 255 ky tu", 400);
+  }
   const movies = await findMovieByTitle(title.trim());
 
   return movies;
@@ -60,10 +62,10 @@ export const addMovie = async (movieData) => {
 
 // 5. Cập nhật thông tin phim
 export const editMovie = async (id, movieData) => {
-  const idValidate = validateId(id);
+  const idValidated = validateId(id);
 
-  if (!idValidate.valid) {
-    throw new AppErrors(idValidate.errors.join(","), 400);
+  if (!idValidated.valid) {
+    throw new AppErrors(idValidated.errors.join(","), 400);
   }
 
   const movie = await findMovieById(id);
@@ -72,10 +74,10 @@ export const editMovie = async (id, movieData) => {
     throw new AppErrors("Phim khong ton tai", 404);
   }
 
-  const movieValidate = validateMovieData(movieData);
+  const movieValidated = validateMovieData(movieData);
 
-  if (!movieValidate.valid) {
-    throw new AppErrors(movieValidate.errors.join(","), 400);
+  if (!movieValidated.valid) {
+    throw new AppErrors(movieValidated.errors.join(","), 400);
   }
 
   await updateMovie(id, movieData);

@@ -5,6 +5,8 @@ import {
   deleteAccountController,
   updateAccountController,
 } from "../Controller/account.Controller.js";
+// deleteAccountController,
+// updateAccountController,
 import { authenticate } from "../Middleware/authenticate.middleware.js";
 import { authorization } from "../Middleware/authorize.middleware.js";
 
@@ -12,6 +14,6 @@ const router = express.Router();
 
 router.get("/", authenticate, authorization(1), getAllAccountsController);
 router.get("/:id", authenticate, authorization(1), getAccountByIdController);
-// router.delete("/:id", authenticate, authorization(1), deleteAccountController);
-// router.put("/:id", authenticate, updateAccountController);
+router.delete("/:id", authenticate, authorization(1), deleteAccountController);
+router.put("/:id", authenticate, authorization(1), updateAccountController);
 export default router;

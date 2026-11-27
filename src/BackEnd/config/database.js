@@ -1,12 +1,6 @@
 import mysql2 from "mysql2/promise";
 import env from "./env.js";
 
-// console.log("Database configuration:");
-// console.log("Host:", env.DB_HOST);
-// console.log("User:", env.DB_USER);
-// console.log("Database:", env.DB_NAME);
-// console.log("Port:", env.DB_PORT);
-
 const pool = mysql2.createPool({
   host: env.DB_HOST,
   user: env.DB_USER,
