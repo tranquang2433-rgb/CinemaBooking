@@ -18,8 +18,6 @@ export const validateMovieData = (movieData) => {
     release_date,
     age_rating,
     language,
-    poster_url,
-    trailer_url,
     format,
     status,
   } = movieData;
@@ -65,26 +63,6 @@ export const validateMovieData = (movieData) => {
   ) {
     result.valid = false;
     result.errors.push("Ngon ngu khong hop le");
-  }
-
-  // Kiểm tra poster
-  if (
-    movieData.poster_url != null &&
-    (typeof movieData.poster_url !== "string" ||
-      movieData.poster_url.length > 500)
-  ) {
-    result.valid = false;
-    result.errors.push("Poster URL khong hop le");
-  }
-
-  // Kiểm tra trailer
-  if (
-    movieData.trailer_url != null &&
-    (typeof movieData.trailer_url !== "string" ||
-      movieData.trailer_url.length > 500)
-  ) {
-    result.valid = false;
-    result.errors.push("Trailer URL khong hop le");
   }
 
   // Kiểm tra định dạng phim
